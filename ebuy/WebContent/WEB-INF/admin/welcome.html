@@ -1,0 +1,63 @@
+﻿<#assign ctx=request.contextPath />
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/lib/icheck/icheck.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>我的桌面</title>
+</head>
+<body>
+<div class="page-container">
+	<h3>欢迎使用E购通后台管理系统</h3>
+	<p>登录名：${session_user.userId}</p>
+	<p>昵称：${session_user.name}</p>
+	<p>性别：
+		<#if session_user.sex = 1>
+			男
+			<#else>
+			女
+		</#if>
+	</p>
+	<p>生日：${session_user.birthday?string("yyyy-MM-dd")}</p>
+	<p>邮箱：${session_user.email}</p>
+	<p>电话：${session_user.phone}</p>
+	<p>地址:${session_user.address!''}</p>
+	<p>角色:
+			<#if session_user.role =2>
+					管理员
+					<#else>
+					超级管理员
+			</#if>
+	</p>
+	<p>创建日期:${session_user.createDate?string("yyyy-MM-dd")}</p>
+	<p>状态:<#if  session_user.activeStatus =1>
+					<font color=red>已激活</font>
+					<#else>
+					<font color=blue>未激活</font>
+			</#if>
+	</p>
+</div>
+
+<script type="text/javascript" src="${ctx}/static/lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="${ctx}/static/h-ui/js/H-ui.js"></script> 
+
+</body>
+</html>

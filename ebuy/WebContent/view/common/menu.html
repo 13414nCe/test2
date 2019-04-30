@@ -1,0 +1,78 @@
+<!-- ajax加载主菜单,子菜单 -->
+<script>
+	$(function(){
+		//通过事件委托方式绑定元素
+		//绑定li元素，鼠标指针悬停在该元素时，则触发回调函数
+		$(".nav-menu").on("mouseover","li",function(){
+			$(this).find(".sub-Menu").show();
+		})
+		//绑定li元素，鼠标指针离开该元素时，则触发该函数
+		$(".nav-menu").on("mouseout","li",function(){
+			$(this).find(".sub-Menu").hide();
+		})
+		
+		//发送ajax请求,获取主菜单,子菜单下拉数据
+ 		$.post("${ctx}/customer/getAjaxMenu",
+			function(data){
+			for(var i = 0;i<data.length;i++){
+				//加载主菜单(7个)
+				if(i<7){
+					var maxLi = $("<li></li>");
+					//创建a元素
+					$("<a></a>").text(data[i].maxType.name).attr("href","${ctx}/customer/goods/showGoodsList?goodsType.code="+data[i].maxType.code).appendTo(maxLi);
+					//创建ul元素
+					var ul = $("<ul></ul>").addClass("sub-Menu");
+					//创建ul元素下面的li元素
+					var minTypes = data[i].minType;
+					//console.info(minTypes);
+					//遍历读取子菜单
+					for(var j = 0;j<minTypes.length;j++){
+						var li = $("<li></li>");
+						$("<a></a>").text(minTypes[j].NAME).attr("href","${ctx}/customer/goods/showGoodsList?goodsType.code="+minTypes[j].CODE).appendTo(li);
+						//把li元素拼接到ul元素中
+						li.appendTo(ul);
+					}
+					//把ul元素与a元素拼接到li元素中
+					ul.appendTo(maxLi);
+					//把拼接后完整的li元素，再追加到class='nav-menu'元素中
+					maxLi.appendTo(".nav-menu");
+				}else if(i==7){
+
+	 				var li = $("<li></li>");
+	 				$("<a></a>").text("更多").addClass("gd_").appendTo(li);
+	 				$("<div></div>").addClass("sub-Menu tc").appendTo(li);
+	 				li.appendTo(".nav-menu");
+				}else{
+    				//创建div元素并设置class
+					var divEle = $("<div></div>").addClass("lx_");
+    				//创建a元素并设置href属性
+					var aEle = $("<a></a>").attr("href","#####");
+    				//创建span元素并设置文本值
+					var spanEle = $("<span></span>").text(data[i].maxType.NAME);
+					//把span元素追加到a元素内
+    				spanEle.appendTo(aEle);
+					//把a元素追加到div元素内
+					aEle.appendTo(divEle);
+					//把div元素追加到id=more的元素中
+					divEle.appendTo("#more");
+		    		}
+			}
+		});
+		
+		
+		
+	})
+
+</script>
+
+
+<div class="nav">
+		<div class="container">
+			<ul class="nav-menu">
+				<!-- 主菜单 -->
+				<li id="home" class="active">
+					<a href="index.html">首  页</a>
+				</li>
+			</ul>
+		</div>
+	</div>

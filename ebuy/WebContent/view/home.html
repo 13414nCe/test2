@@ -1,0 +1,202 @@
+<#assign ctx=request.contextPath />
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>E购通电子商务平台-首页</title>
+	<link rel="stylesheet" href="${ctx}/css/base.css"/>
+	<link rel="stylesheet" href="${ctx}/css/index.css"/>
+	<link rel="stylesheet" href="${ctx}/css/style1.css"/>
+	<link rel="stylesheet" href="${ctx}/css/home.css"/>
+	
+	<!-- 引入jQuery框架 -->
+	<script type="text/javascript" src="${ctx}/js/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="${ctx}/js/jquery-migrate-1.2.1.js"></script>
+	<!-- 引入自定义的日期插件 -->
+	<!-- <script type="text/javascript" src="${ctx}/js/jquery-timer-1.0.js"></script> -->
+	<script type="text/javascript" src="${ctx}/js/jquery.js"></script>
+	<script type="text/javascript">
+	/** 文档加载完 */
+	$(function(){
+		
+		
+		
+		
+		//banner轮播
+		
+		//1.小圆点轮播
+		var lis = $("#ol_circle > li")//获取5个小圆点
+		var imgs = $("#ul_img_ad > li")//获取5张轮播图
+		var index = 0;//定义左右箭头的坐标
+		var autoIndex = 0; //定义自动轮播的坐标
+		lis.each(function(i){
+			//为小圆点绑定悬停事件
+			lis.eq(i).mouseover(function(){
+				//为当前li元素增加样式
+				$(this).addClass("active");
+				//除了当前li元素，其他元素清除样式
+				lis.not($(this)).removeClass("active");	
+				//根据索引值显示对应的banner图
+				imgs.eq(i).show();
+				//除了要显示的banner图，其他都隐藏
+				imgs.not(imgs.eq(i)).hide();
+				index = i;
+				autoIndex = i;
+			})
+		})
+		//左右箭头轮播
+		//下一页
+		$(".next").click(function(){
+			if(index<(lis.length-1)){//index<4
+				index++;
+			}else{
+				index = 0;//如果是尾页，则重置为0
+			}
+			
+			lis.eq(index).trigger("mouseover");
+		})
+		//上一页
+		$(".prev").click(function(){
+			if(index>0){
+				index--;
+			}else{
+				index = lis.length-1;
+			}
+			lis.eq(index).trigger("mouseover");
+		})
+		//自动轮播
+		var autoAction = setInterval(active,2000)
+		
+		//鼠标悬停在banner图上，则停止轮播，移开则继续轮播
+		imgs.each(function(){
+			//如果悬停在banner上，暂停轮播
+			$(this).mouseover(function(){
+				clearInterval(autoAction);
+			});
+			//当鼠标移开banner后，启动轮播
+			$(this).mouseout(function(){
+				autoAction = setInterval(active,2000)
+			})
+		})
+		
+		function active(){
+			
+			if(autoIndex<(lis.length-1)){
+				autoIndex++;
+			}else{
+				autoIndex = 0;
+			}
+			lis.eq(autoIndex).trigger("mouseover");
+		}
+		 
+	});
+	
+	</script>
+</head>
+<body>
+	<!-- header 头部 -->
+	<div class="header">
+
+		<!-- header-top 头部上面部分 -->
+		<#include "common/top.html"/>
+		<!-- header-top  end-->
+
+		<!-- search-logo 搜索部分 -->
+		<#include "common/search.html"/>
+		<!-- search-logo end-->
+	</div>
+	<!-- header end-->
+
+
+	<!-- nav 导航区开始 -->
+	<#include "common/menu.html"/>
+	<!-- nav end 导航区结束-->
+
+	<!-- banner 横幅广告 -->
+	<div class="banner">
+		
+		<div class="banner-wrap">
+			<ul id="ul_img_ad" class="clear">
+			
+			<#list pics as pic>
+				<#if pic_index lt 6>
+					<li><a href="${ctx}/${pic.requestUrl}">
+						<img style="width:1920px;height:600px;" src="${ctx}/file/${pic.imageUrl}">
+					</a></li>
+				</#if>
+			</#list>
+			</ul>
+		</div>
+		<div class="container">
+			<!-- 向左 -->
+			<a class="prev" href="javascript: void(0)"></a>
+			<!-- 向右 -->
+			<a class="next" href="javascript: void(0)"></a>
+			<!-- 图片切换的圆点 -->
+			<ol id="ol_circle" class="clear">
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ol>
+		</div>
+	</div>
+	<!-- banner end-->
+
+
+	<!-- content -->
+	<div class="content">
+		<div class="container">
+			<div class="section">
+				<div class="tips clear">
+					<span class="left f24 white">限时抢购</span>
+					<span class="left white text-bottom s1" id="down_count_span">
+						 <!-- 还剩<font>0</font><font>0</font><strong>:</strong>
+						<font>0</font><font>0</font><strong>:</strong>
+						<font>0</font><font>0</font>结束 -->
+					</span>
+					<a class="right b-tgl" href="#"><em>下期预告</em></a>
+				</div>
+				<div class="clear bg-white pr1">
+					<a href="#" class="left img-bg">
+						<img src="${ctx}/images/product/1.jpg" alt="">
+					</a>
+					<ul class="right">
+						<#list times as time>
+							<#if time_index lt 7>
+								<li class="clear">
+									<a href="${ctx}/customer/goods/getGoodsDetails?id=${time.goods.id}" class="left l1">
+										<img src="${ctx}/file/${time.goods.image}" alt="">
+									</a>
+									<span class="text-top left">
+										<a href="${ctx}/customer/goods/getGoodsDetails?id=${time.goods.id}">
+											<#if time.goods.title?length gt 20>
+												${time.goods.title?substring(0,20)}
+												<#else>
+												${time.goods.title}
+											</#if>
+										</a>
+										<p>抢码价：</p>
+										<p class="f18 bg-c40000 white">¥${time.goods.favorablePrice}</p>
+										<p>【限时疯抢】</p>
+									</span>
+									<!-- <div id="down_count_${time.id}" style = "width:211px;height:160px"></div>
+									<script>
+										$("#down_count_${time.id}").downCount("${time.limitDate?string('yyyy-MM-dd')}","还剩","结束")
+									</script> -->
+								</li>
+							</#if>
+						</#list>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- content end-->
+	<!-- footer -->
+	<#include "common/footer.html" />
+	<!-- footer end -->
+</body>
+</html>

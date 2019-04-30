@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qyl.ebuy.mapper.TimeMapper">
+
+	<select id="getTimeList" resultMap="timeResultMap">
+		select * from e_time_limited
+			where is_end = 1 and limit_date > now()
+	</select>
+	
+	<insert id="addTime">
+		insert into e_time_limited(limit_date,goods_id,is_end)
+			values(#{limitDate},#{goods.id},#{isEnd})
+	</insert>
+  	
+  	<resultMap type="Time" id="timeResultMap">
+  		<result property="limitDate" column="limit_date"/>
+  		<result property="isEnd" column="is_end"/>
+  		<!-- <result property="goodsId" column="goods_id"/> -->
+  		<association property="goods" column="goods_id" 
+  					select="cn.qyl.ebuy.mapper.GoodsMapper.getGoodsById" />
+  		
+  	</resultMap>
+</mapper>

@@ -1,0 +1,39 @@
+<script>
+	$(function(){
+		//通过ajax获取购物车数量
+		$.post("${ctx}/customer/shopCar/getAjaxCount",function(data){
+			console.log(data.count);
+			$("#shopNum").text(data.count);
+		})
+		
+	})
+</script>
+<div class="search-logo">	
+			<div  class="clear container">
+				<a href="#" class="left lo1"><img src="${ctx}/images/logo.png" alt=""></a>
+				<form class="left fr1" action="${ctx}/customer/goods/showGoodsList" method="post">
+					<p>
+					<#if goods??>
+						<input placeholder="手机搜索  OPPO N3（N5209）白色" name="title" value="" class="f14 c-999999" type="text">
+						<#else>
+						<input placeholder="手机搜索  OPPO N3（N5209）白色" name="title" value="" class="f14 c-999999" type="text">
+					</#if>
+						<input type="submit" class="f14 white" value="搜索" style="margin-left:-20px;">
+					</p>
+					<p class="text-2em">
+						<a href="#">618狂欢</a>
+						<a href="#">西门子</a>
+						<a href="#">199减100</a>
+						<a href="#">6.18元</a>
+						<a href="#">魅蓝note</a>
+						<a href="#">图书</a>
+						<a href="#">61812期免息</a>
+						<a href="#">领500元</a>
+					</p>
+				</form>
+				<span class="right">
+					<a href="javascript:void()" class="shopingcart"></a><font id="shopNum">0</font>
+					<a href="${ctx}/customer/shopCar/myShopCar">我的购物车</a>
+				</span>
+			</div>
+		</div>

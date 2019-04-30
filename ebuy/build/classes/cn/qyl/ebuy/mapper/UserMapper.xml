@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qyl.ebuy.mapper.UserMapper">
+	
+	<select id="getUserByUserNameAndPwd" resultMap="userResultMap">
+		select * from e_user where user_id=#{userId} and pass_word=#{passWord}
+	</select>
+	<select id="getUsers" resultMap="userResultMap">
+		select * from e_user
+		<where>
+			<if test="userId !='' and userId !=null">
+				user_id= #{userId}
+			</if>
+			<if test="email !=null and email !=''">
+				and email= #{email}
+			</if>
+			<if test="role != null and role !=''">
+				and	role =#{role}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getUserById" resultMap="userResultMap">
+			select * from e_user where id =#{id}
+	</select>
+	
+	<insert id="addUser">
+		insert into e_user(user_id,name,sex,birthday,
+		email,phone,address,role,create_date)
+		values(#{userId},#{name},#{sex},#{birthday},#{email},#{phone},#{address},#{role},#{createDate})
+	</insert>
+	
+	<update id="updateUser">
+		update e_user set user_id=#{userId},name=#{name},sex=#{sex},
+    		birthday=#{birthday},email=#{email},phone=#{phone},
+    		address=#{address},role=#{role} where id=#{id}
+	</update>
+	<!-- 删除单个记录 -->
+	<delete id="delUserById">
+		delete  from e_user where id=#{id}
+	</delete>
+	
+	<!-- 批量删除 -->
+	<delete id="delUserByIds">
+		delete from e_user
+		where id in
+		<foreach item="ids"  collection="array"
+			      open="(" separator="," close=")">
+			        #{ids}
+		</foreach>
+	
+	</delete>
+	
+	<resultMap type="User" id="userResultMap">
+		<result property="userId" column="user_id"/>
+		<result property="passWord" column="pass_word"/>
+		<result property="createDate" column="create_date"/>
+		<result property="activeStatus" column="active_status"/>
+		<result property="activeCode" column="active_code"/>
+	</resultMap>
+</mapper>

@@ -1,0 +1,80 @@
+﻿<#assign ctx = request.contextPath />
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/style.css" />
+<title>订单详情列表</title>
+</head>
+<body>
+
+<div class="page-container">
+	 <table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="9">订单详情列表</th>
+			</tr>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th width="40">ID</th>
+				<th width="150">订单编号</th>
+				<th width="90">商品名称</th>
+				<th width="60">商品封面</th>
+				<th width="100">优惠价</th>
+				<th width="130">商品数量</th>
+			</tr>
+		</thead>
+		<tbody>
+			<#if orderItems??>
+				<#list  orderItems as item>  
+					<tr class="text-c">
+						<td><input type="checkbox" value="" id=""></td>
+						<td>${item_index+1}</td>
+						<td>
+							${item.order.orderCode}
+						</td>
+						<td>
+							<#if item.goods.title?length gt 20>
+								${item.goods.title?substring(0,20)}
+								<#else>
+								${item.goods.title}
+							</#if>
+						</td>
+						<td>
+							<img src="${ctx}/file/${item.goods.image}" style="width:120px;height:80px;"/>
+						</td>
+						<td>
+							${item.goods.favorablePrice}
+						</td>
+						<td>${item.orderNum}</td>
+						
+						
+						
+					</tr>
+				
+				</#list>
+			</#if>
+			
+			
+		</tbody>
+	</table>
+	
+	
+</div>
+<script type="text/javascript" src="${ctx}/static/lib/jquery/1.9.1/jquery.min.js"></script>  
+<script type="text/javascript" src="${ctx}/static/lib/layer/2.1/layer.js"></script> 
+<script type="text/javascript" src="${ctx}/static/h-ui/js/H-ui.js"></script> 
+<script type="text/javascript" src="${ctx}/static/h-ui/js/H-ui.admin.js"></script> 
+
+</body>
+</html>

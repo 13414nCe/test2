@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>E购通电子商务平台-注册</title>
+	<link rel="stylesheet" href="css/base.css"/>
+	<link rel="stylesheet" href="css/register.css"/>
+	<link rel="stylesheet" href="css/style.css"/>
+	
+</head>
+<body>
+	<!-- header -->
+	<div class="header">
+		<!-- header-top -->
+		<div class="header-top clear">
+			<div class="container">
+
+				<div class="left">
+					<span class="home"><em><a href="index.html">E购通首页</a></em></span>
+					<span>亲，欢迎来到E购通</span>
+					<span>请<a href="login.html">登录</a></span>
+					<a href="#">免费注册</a>
+				</div>
+				<ul class="right clear">
+					<li><a href="#">我的E购通</a></li>
+					<li><a href="#">我的订单</a></li>
+					<li><a href="#">服务中心</a><i></i>
+						<ul>
+							<li><a href="#">子导航一</a></li>
+							<li><a href="#">子导航二</a></li>
+							<li><a href="#">子导航三</a></li>
+							<li><a href="#">子导航四</a></li>
+						</ul>
+					</li>
+					<li><a href="#">网站导航</a><i></i>
+						<ul>
+							<li><a href="#">子导航一</a></li>
+							<li><a href="#">子导航二</a></li>
+							<li><a href="#">子导航三</a></li>
+							<li><a href="#">子导航四</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- header-top  end-->
+		<!-- search-logo -->
+		<div class="search-logo">	
+			<div  class="clear container">
+				<a href="#" class="left lo1"><img src="images/logo.png"></a>
+				<strong class="f24 c-333333">欢迎注册</strong>
+			</div>
+			<!-- search-logo end-->
+		</div>
+	</div>
+	<!-- header end-->
+
+	<!-- content -->
+	<div class="content">
+		<div class="container">
+			<div class='text-center option'>
+				<span>
+					<strong class="f18 actives c-c40000 active">个人用户<i></i></strong>
+					<strong class="f18 c-c40000">企业用户<i></i></strong>
+					<font class="f14">我已经注册，现在就 <a class="c-c40000" href="login.html">登录</a></font>
+				</span>
+			</div>
+			
+			<!-- 注册表单 -->
+			<form class="fr-re" action="http://www.yayadou.com" method="post">
+					<p class="type">
+						<span>用户名：</span>
+						<label><i class="user"></i><input name="userId" id="userId" type="text"></label>
+						<font>
+							<strong  id="userId_tip" class="normal">* 用户名不能为空！</strong>
+						</font>
+					</p>
+
+					<p class="type">
+						<span>设置密码：</span>
+						<label><i class="password"></i><input name="pwd" id="pwd" type="password"/></label>
+						<font>
+							<strong id="pwd_tip" class="normal">* 设置密码不能为空！</strong>
+						</font>
+					</p>
+
+					<p class="type">
+						<span>确认密码：</span>
+						<label><i class="password"></i><input type="password" name="okPwd" id="okPwd"></label>
+						<font>
+							<strong id="okPwd_tip" class="normal">* 确认密码不能为空！</strong>
+						</font>
+					</p>
+					<p class="type p4">
+						<span>真实姓名：</span>
+						<label><input name="name" id="name" type="text"></label>
+						<font>
+							<strong  id="name_tip" class="normal">* 真实姓名不能为空！</strong>
+						</font>
+					</p>
+
+					<p class="type">
+						<span>城市选择：</span>
+						<select style="height:30px;width:155px;" name="provice" id="provice">
+							<option value="0">==请选择省份==</option>
+						</select><select style="height:30px;" name="city" id="city">
+							<option value="0">==请选择城市==</option>
+						</select>
+						<font>
+							<strong id="procity_tip" class="normal">* 请选择省份！</strong>
+						</font>
+					</p>
+					<p class="p1">
+						<span>性别：</span>
+						<label><input type="radio" name="sex" checked="true">男性</label>
+						<label><input type="radio" name="sex">女性</label>
+					</p>
+					
+					<p class="type p4">
+						<span>出生日期：</span>
+						<label><input  class="Wdate" id="birthday"  name="birthday" 
+							type="text" placeholder="请选择出生日期" 
+							onfocus="WdatePicker({lang:'zh-cn',skin:'whyGreen',dateFmt:'yyyy-MM-dd'});"></label>
+						<font>
+							<strong id="birthday_tip" class="normal">* 请选择出生日期！</strong>
+						</font>
+					</p>
+					<p class="type p4">
+						<span>手机号码：</span>
+						<label><input type="text" id="phone" name="phone"></label>
+						<font>
+							<strong id="phone_tip" class="normal">* 手机号码不能为空！</strong>
+						</font>
+					</p>
+					<p class="type p4">
+						<span>学历：</span>
+						<label><input type="text" name="education" id="education"></label>
+						<font>
+							<strong id="education_tip" class="normal">* 学历不能为空！</strong>
+						</font>
+					</p>
+					<p class="p3">
+						<span></span>
+						<label>
+							<input type="checkbox" id="agreen"/>
+							<em class="c-999999">我已经阅读并同意</em><a class="c-c40000" href="#">《E购通用户注册协议》</a>
+						</label>
+						<strong id="agreen_tip" class="normal"></strong>
+					</p>
+					<p><span></span><input type="submit" value="立即注册"></p>
+			
+			</form>
+		</div>
+	</div>
+	<!-- content -->
+	<div class="footer">
+		 <p class="text-center">
+		 	<span>
+		 		<a href="about-us.html">关于我们</a><font>|</font>
+		 		<a href="about-us.html">商务合作</a><font>|</font>
+		 		<a href="about-us.html">网站地图</a><font>|</font>
+		 		<a href="about-us.html">友情链接</a><font>|</font>
+		 		<a href="about-us.html">法律声明</a>
+		 	</span>
+		 </p>
+		 <p class="text-center">
+		 	<span>
+		 		Copyright©2012 广州市E购通网络科技有限公司 版权所有
+		 	</span>
+		 </p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 定义实体类的别名 -->
+	<typeAliases>
+		<typeAlias type="cn.qyl.ebuy.dto.User" alias="User"/>
+		<typeAlias type="cn.qyl.ebuy.dto.Goods" alias="Goods"/>
+		<typeAlias type="cn.qyl.ebuy.dto.GoodsType" alias="GoodsType"/>
+		<typeAlias type="cn.qyl.ebuy.dto.Order" alias="Order"/>
+		<typeAlias type="cn.qyl.ebuy.dto.OrderItem" alias="OrderItem"/>
+		<typeAlias type="cn.qyl.ebuy.dto.Picturcarousel" alias="Picture"/>
+		<typeAlias type="cn.qyl.ebuy.dto.Timlimited" alias="Time"/>
+	</typeAliases>
+	
+	<environments default="development">
+	    <environment id="development">
+	      <transactionManager type="JDBC"/>
+	      <dataSource type="POOLED">
+	        <property name="driver" value="com.mysql.jdbc.Driver"/>
+	        <property name="url" value="jdbc:mysql:///e_buy"/>
+	        <property name="username" value="root"/>
+	        <property name="password" value="root"/>
+	      </dataSource>
+	    </environment>
+	  </environments>
+	  
+	<!-- 配置数据映射文件 -->  	
+	<mappers>
+		<mapper class="cn.qyl.ebuy.mapper.UserMapper"/>
+		<mapper class="cn.qyl.ebuy.mapper.GoodsTypeMapper"/>
+		<mapper class="cn.qyl.ebuy.mapper.GoodsMapper"/>
+		<mapper class="cn.qyl.ebuy.mapper.OrderMapper"/>
+		<mapper class="cn.qyl.ebuy.mapper.PicMapper"/>
+		<mapper class="cn.qyl.ebuy.mapper.TimeMapper"/>
+		<mapper class="cn.qyl.ebuy.mapper.OrderItemMapper"/>
+	</mappers>
+
+</configuration>
+  

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qyl.ebuy.mapper.GoodsMapper">
+  	
+  	
+  	<select id="getCountByGoods" resultType="int">
+  		select count(*) from e_goods 
+  		 <where>
+  			<if test="goods.title !=null and goods.title !=''">
+  				title like concat('%',#{goods.title},'%')
+  			</if>
+  			<if test="goods.brandName !=null and goods.brandName !=''">
+  				and brand_name like concat('%',#{goods.brandName},'%')
+  			</if>
+  			<if test="goods.goodsType != null and goods.goodsType.code!=null and goods.goodsType.code!=''">
+  				type_code =#{goods.goodsType.code}
+  			</if>
+  		</where>
+  	</select>
+  	<!-- 分页查询商品列表 -->
+  	<select id="getGoodsListByPage" resultMap="goodsResultMap">
+  		select * from e_goods
+  		<where>
+  			<if test="goods.title !=null and goods.title !=''">
+  				title like concat('%',#{goods.title},'%')
+  			</if>
+  			<if test="goods.brandName !=null and goods.brandName !=''">
+  				brand_name like concat('%',#{goods.brandName},'%')
+  			</if>
+  		</where>
+  		limit #{pageModel.startRow},#{pageModel.pageSize}
+  	</select>
+  	
+  	<!-- 根据id获取商品 -->
+  	<select id="getGoodsById" resultMap="goodsResultMap">
+  		select * from e_goods where id=#{id}
+  	</select>
+  	
+  	<!-- 根据标题获取商品列表 -->
+  	<select id="getGoodsListByTitle" resultMap="goodsResultMap">
+  		select * from e_goods
+  			<where>
+  				<if test="goods.title !=null and goods.title !=''">
+  					title like concat('%',#{goods.title},'%')
+  				</if>
+  				<if test="goods.goodsType != null &amp;&amp; goods.goodsType.code !=''">
+  					and type_code =#{goods.goodsType.code}
+  				</if>
+  			</where>
+  			limit #{pageModel.startRow},#{pageModel.pageSize}
+  	</select>
+  	
+  	<!-- 添加商品 -->
+  	<insert id="addGoods">
+  		insert into e_goods(title,brand_name,price,favorable_price,
+  							grounding_date,storage,image,description,
+  							type_code,create_date)
+  							values(#{title},#{brandName},#{price},
+  							#{favorablePrice},#{groundingDate},#{storage},
+  							#{image},#{description},#{goodsType.code},#{createDate})
+  	</insert>
+  	
+  	<update id="updateGoods">
+  		<set>
+  			<if test="image!=null and image!=''">
+  				image=#{image}
+  			</if>
+  		</set>
+  		update e_goods set title=#{title},brand_name=#{brandName},price=#{price},
+  				favorable_price=#{favorablePrice},grounding_date=#{groundingDate},
+  				storage=#{storage},image=#{image},description=#{description},type_code=#{goodsType.code},
+  				create_date=#{createDate} where id=#{id}
+  	</update>
+  	
+  	<delete id="delGoods">
+  		delete from e_goods where id=#{id}
+  	</delete>
+  	
+  	<delete id="delGoodsByGids">
+  		delete from e_goods
+  		where id in
+  		<foreach item="gids"  collection="array"
+			      open="(" separator="," close=")">
+			        #{gids}
+		</foreach>
+  	</delete>
+  	
+  	<select id="getGoodsList" resultMap="goodsResultMap">
+  		select * from e_goods
+  	</select>
+  	
+  	<resultMap type="Goods" id="goodsResultMap">
+  		<result property="title" column="title"/>
+  		<result property="brandName" column="brand_name"/>
+  		<result property="favorablePrice" column="favorable_price"/>
+  		<result property="groundingDate" column="grounding_date"/>
+  		<result property="createDate" column="create_date"/>
+  		<association property="goodsType" column="type_code" 
+  		      select="cn.qyl.ebuy.mapper.GoodsTypeMapper.getGoodsTypeByCode"/>
+  		<!-- <association property="goodsType" column="type_code" 
+  		      		select="cn.qyl.ebuy.mapper.GoodsTypeMapper.getGoodsTypeByCode"/> -->
+  	</resultMap>
+  	
+</mapper>

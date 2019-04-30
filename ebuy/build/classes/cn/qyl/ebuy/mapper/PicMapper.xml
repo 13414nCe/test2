@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.qyl.ebuy.mapper.PicMapper">
+
+	<select id="getPics" resultMap="picResultMap">
+		select * from e_picture_carousel
+	</select>
+	
+	<insert id="addPic">
+		insert into e_picture_carousel(image_url,request_url)
+			values(#{imageUrl},#{requestUrl})
+	</insert>
+	
+	
+	<delete id="delPicById">
+		delete from e_picture_carousel where id=#{pid}
+	</delete>
+  	
+  	<resultMap type="Picture" id="picResultMap">
+  		<result property="imageUrl" column="image_url"/>
+  		<result property="requestUrl" column="request_url"/>
+  	</resultMap>
+  	
+</mapper>

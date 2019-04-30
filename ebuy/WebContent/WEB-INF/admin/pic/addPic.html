@@ -1,0 +1,111 @@
+<#assign ctx=request.contextPath />
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<LINK rel="Bookmark" href="/favicon.ico" >
+<LINK rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/lib/Hui-iconfont/1.0.7/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/lib/icheck/icheck.css" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="${ctx}/static/h-ui/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<!--/meta 作为公共模版分离出去-->
+
+<title>新增轮播图</title>
+</head>
+<body>
+<div class="page-container">
+	<font color=red>${tip!''}</font>
+	
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-2">
+		<span class="c-red">*</span>轮播图：</label>
+		<form id="imgForm" enctype="multipart/form-data">
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="file" name="myFile">
+				<input type="submit" value="上传" />
+			</div>
+			<img src="" id="showImg" style="width:300px; height:80px;margin-left:146px;margin-top:20px;"/>
+		</form>
+	</div>
+	
+	<form class="form form-horizontal" id="form-article-add" action="${ctx}/admin/pic/addPic" method="post">
+		
+		<input type="hidden" name="imageUrl" id="imageUrl" value="" />
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">
+			<span class="c-red">*</span>
+			请求地址:
+			</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" name="requestUrl">
+			</div>
+		</div>
+		
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="${ctx}/static/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/lib/jquery/jquery.form.js"></script>
+<script type="text/javascript" src="${ctx}/static/lib/jquery/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/static/lib/layer/2.1/layer.js"></script> 
+<script type="text/javascript" src="${ctx}/static/lib/icheck/jquery.icheck.min.js"></script> 
+<script type="text/javascript" src="${ctx}/static/lib/jquery.validation/1.14.0/jquery.validate.min.js"></script> 
+<script type="text/javascript" src="${ctx}/static/lib/jquery.validation/1.14.0/validate-methods.js"></script> 
+<script type="text/javascript" src="${ctx}/static/lib/jquery.validation/1.14.0/messages_zh.min.js"></script> 
+<script type="text/javascript" src="${ctx}/static/h-ui/js/H-ui.js"></script> 
+<script type="text/javascript" src="${ctx}/static/h-ui/js/H-ui.admin.js"></script> 
+<script type="text/javascript" src="${ctx}/static/h-ui/js/comment.js"></script>
+<!--/_footer /作为公共模版分离出去-->
+
+<script>
+	
+	$(function(){
+		$('#imgForm').ajaxForm({
+		       url:"${ctx}/admin/pic/uploadImgAjax",
+		       type:"POST",
+		       dataType:"json",
+		       async:true,
+		       success:function(data){
+		    	    if(data.status == "success"){
+		    	    	//上传成功，通过js回显到页面
+		    	    	$("#showImg").attr("src","${ctx}/file/"+data.fileName);
+		    	   		//把文件名填充到表单中
+		    	   		$("#imageUrl").val(data.fileName);
+		    	    }
+		    	  
+		       },
+		       error:function(){
+		    	   alert("文件上传失败!");
+		       }
+		    });
+	})
+	
+</script>
+
+
+</body>
+</html>

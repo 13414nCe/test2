@@ -1,0 +1,233 @@
+<#assign ctx = request.contextPath />
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>E购通电子商务平台-购物车</title>
+	<link rel="stylesheet" href="${ctx}/css/base.css"/>
+
+	<link rel="stylesheet" href="${ctx}/css/home.css"/>
+	<link rel="stylesheet" href="${ctx}/css/style1.css"/>
+	<!-- 引入jQuery框架 -->
+	<script type="text/javascript" src="${ctx}/js/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="${ctx}/js/jquery-migrate-1.2.1.js"></script>
+	<script type="text/javascript">
+		
+		/** 文档加载完 */
+		$(function(){
+
+			$("#submitOrder").click(function(){
+				
+				var boxs = $("input[id^='box_']");
+				var ids = new Array();
+				$.each(boxs,function(index){
+					ids[index] = $(this).val();
+				})
+				//发送请求
+				location.href = "${ctx}/customer/order/saveOrder?ids="+ids;
+			})
+			
+			
+
+			/** 获取全选复选框为它绑定点击事件 */
+			$("#checkAll").click(function(){
+				/** 获取下面所有的checkbox,当全选选中时下面的全部选中,
+					当全选没有选中时,下面不需要选中 */
+				/** 查询所有的input元素它的类型为checkbox并且id属性值以box_开头 */
+				$("input[type='checkbox'][id^='box_']").attr("checked", this.checked);
+				/** 计算商品的总金额 */
+				calcPrice();
+			});
+
+			/** 如果全选复选框没有选中的话，让它选中 */
+			if (!$("#checkAll").attr("checked")){
+				$("#checkAll").trigger("click");
+			}else{
+				/** 计算商品的总金额 */
+				calcPrice();
+			}
+
+			/** 获取下面的checkbox为它们绑定点击事件 */
+			var boxs = $("input[type='checkbox'][id^='box_']");
+			boxs.click(function(){
+				/** 计算商品的总金额 */
+				calcPrice();
+				/** 让全选选中 */
+				$("#checkAll").attr("checked", boxs.length == boxs.filter(":checked").length);
+			});
+
+			/** 获取所有的购买数据文本框,为它们绑定onchange事件 */
+			$("input[id^='num_']").change(function(){
+				/** 获取购买数量 */
+				var num = this.value;
+				/** 对购买数量做判断 */
+				if (!/^\d+$/.test(num) || num < 1){
+					this.value = 1;
+					num = 1;
+				}
+				/** 获取单价 */
+				var price = parseFloat($(this.id.replace("num", "#price")).html());
+				/** 设置小计 */
+				$(this.id.replace("num", "#total")).html(num * price);
+				/** 计算商品的总金额 */
+				calcPrice();
+			});
+
+
+			/** 获取反选复选框为它绑定点击事件 */
+			$("#uncheck").click(function(){
+				/** 迭代下面所有的checkbox */
+				boxs.each(function(){
+					/** 让自己取选自己的checked属性值 */
+					$(this).attr("checked", !this.checked);
+				});
+				/** 计算商品的总金额 */
+				calcPrice();
+				/** 让全选选中 */
+				$("#checkAll").attr("checked", boxs.length == boxs.filter(":checked").length);
+			});
+
+		});
+
+		/** 定义计算商品总金额的函数 */
+		var calcPrice = function(){
+			/** 获取下面所有选中的checkbox */
+			var boxs = $("input[type='checkbox'][id^='box_']:checked");
+			/** 定义总金额 */
+			var total_price = 0;
+			/** 如果有选中的，就计算 */
+			if (boxs.length > 0){
+				/** 迭代所有选中的checkbox */
+				boxs.each(function(){
+					/** 获取价格 */
+					var price = parseFloat($(this.id.replace("box", "#price")).html());
+					/** 获取数量 */
+					var num = parseInt($(this.id.replace("box", "#num")).val());
+					/* 设置小计金额 **/
+					total_price += price * num;
+				});
+				/** 设置显示总金额 */
+				$("#total_price").html("¥ "+ total_price +" 元");
+			}else{
+				/** 设置显示总金额 */
+				$("#total_price").html("¥ 0.00 元");
+			}
+		};
+	</script>
+</head>
+<body>
+	<!-- header -->
+	<div class="header">
+		<!-- header-top -->
+		<#include "common/top.html" />
+		<!-- header-top  end-->
+		<!-- search-logo -->
+		<#include "common/search.html"/>
+		<!-- search end -->
+	</div>
+	<!-- header end-->
+	<!-- nav -->
+	<#include "common/menu.html"/>
+	<!-- nav end-->
+
+	
+	<!-- content -->
+	<div class="content">
+		<div class="container">
+			<div class="dz_">
+			<form>
+				<div class="box clear">
+					<div class="label">
+						<p><span>*</span>收货人：</p>
+					</div>
+					<div class="input">
+						<input type="text" value="${session_user.name}" disabled="disabled">
+					</div>
+				</div>
+				
+				<div class="box clear">
+					<div class="label">
+						<p><span>*</span>详细地址：</p>
+					</div>
+					<div class="input">
+						<input type="text" style="width:300px;" value="${session_user.address}" disabled="disabled">
+					</div>
+				</div>
+				<div class="box clear">
+					<div class="label">
+						<p><span>*</span>手机号码：</p>
+					</div>
+					<div  class="input"><input type="text" value="${session_user.phone}" disabled="disabled"></div>
+					
+					
+				</div>
+				<div class="box clear">
+					<div class="label">
+						<p>邮箱：</p>
+					</div>
+					<div  class="input"><input type="text" value="${session_user.email}" disabled="disabled" ></div>
+					
+				</div>
+				<strong>用来接收订单提醒邮件，便于您及时了解订单状态</strong><br/><br/>
+				<a class="bc_" href="javascript:void(0)">保存收获人信息</a>
+			</form>
+			</div>
+			<div class="ps_">
+				<span  style="padding-left:10px">支付及配送方式</span>
+				<p>支付方式：在线支付</p>
+				<p>配送方式：快递运输</p>
+			</div>
+			<div class="spqd_">
+				<span  style="padding-left:10px">商品清单</span>
+				<table>
+				<thead>
+					<tr>
+						<th class="th1">商品名称</th>
+						<th>优惠价</th>
+						<th>返现</th>
+						<th>数量</th>
+						<th>库存</th>
+						<th>小计（元）</th>
+					</tr>
+				</thead>
+				<tbody>
+					<#list goodsList as goods>
+						<tr>
+							<td>
+								<input type = "hidden" id="box_${goods.id}" value="${goods.id}"/>
+								<#if goods.title?length gt 20>
+									${goods.title?substring(0,20)}
+									<#else>
+									${goods.title}
+								</#if>
+							</td>
+							<td>￥${goods.favorablePrice}</td>
+							<td>￥0.00</td>
+							<td>${goods.buyNum}</td>
+							<td>${goods.storage}</td>
+							<td class="red">￥${(goods.favorablePrice*goods.buyNum)}</td>
+						</tr>
+					</#list>
+				</tbody>
+				</table>
+				
+			</div>
+			<div class="ps_">
+				<span style="padding-left:10px">结算信息</span>
+				
+				<div class="jsk">
+					<span>商品金额：${totalCount}元 + 运费0.00元 - 优惠券：0.00元</span>
+					<p>应付总额：<strong class="red">￥${totalCount}</strong>元</p>
+				</div>
+			</div>
+			<p class="tj_">
+				<button id="submitOrder">提交订单</button>
+			</p>
+		</div>
+	</div>
+	<!-- content -->
+	<!-- footer -->
+	<#include "common/footer.html"/>
+	<!-- footer end -->
+</body>
+</html>
