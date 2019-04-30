@@ -1,0 +1,25 @@
+
+<!DOCTYPE hibernate-configuration 
+PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" 
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		 <!-- 配置数据库方言 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<!-- 配置数据源 -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql:///test</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
+		<!-- 显示hibernate执行的sql语句 -->
+		<property name="hibernate.show_sql">true</property>
+		<!-- 配置自动创表策略
+			create:每次启动项目时，根据实体类映射文件重新创建table
+			create-drop:每次启动项目时，根据实体类映射文件创建table，当项目关闭时drop掉所有的table，适合项目初期，测试使用
+			update:每次项目启动时，检查表结构。如果有更新，则进行更新表结构。
+			validate:每次启动项目时，对表结构尽心自检
+		 -->
+		<property name="hibernate.hbm2ddl.auto">create</property>
+		<mapping resource="org/test/dto/User.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>
