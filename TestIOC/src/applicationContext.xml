@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<!-- 使用有惨构造器注入属性 -->
+	<!-- <bean id="book" class="cn.itcast.property.Book">
+		
+			name:为属性的名字，value:为属性的值
+		
+		<constructor-arg name="name" value="Book" />
+	</bean> -->
+	
+	<!-- set方法的方式注入属性 -->
+	<bean id="person" class="cn.itcast.property.Person">
+		<property name="userName" value="小茗同学" />
+	</bean>
+</beans>
